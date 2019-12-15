@@ -159,3 +159,11 @@ char ** mapAltitudeTravel(Destination dest) {
 
 	return map;
 }
+
+// Allibera tota la memòria d'una destinació
+void freeAll(Destination dest) {
+	free(dest.name);
+	free(dest.country);
+	free(dest.hotelPrices);
+	free(dest.travelAltitude);
+}
