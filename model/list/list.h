@@ -6,10 +6,10 @@
 #define MAX_SORTING 4
 
 typedef enum {
-	BY_NAME,
-	BY_AVG_PRICE,
-	BY_DISTANCE,
-	BY_TIME
+	BY_NAME = 1,
+	BY_AVG_PRICE = 2,
+	BY_DISTANCE = 3,
+	BY_TIME = 4
 } Sorting;
 
 typedef struct _Node {

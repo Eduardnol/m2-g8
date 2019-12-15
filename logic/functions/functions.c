@@ -13,10 +13,9 @@ void showAllDestinations(List *l) {
 		option = askUserForOption();
 	} while (option < 1 || option > MAX_SORTING);
 
-	option -= 1;
+	//option -= 1;
 
 	goStart(l, option);
-    printf("\nHola)");
 	while (!isEnd(*l, option)) {
 
 		printDestination(readPoi(*l, option), ++i, option);
