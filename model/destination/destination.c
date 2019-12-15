@@ -52,3 +52,110 @@ double getAverageHotelPrice(Destination dest) {
 
 	return average;
 }
+
+// Modifica coordenades segons la direcció
+void advanceInDirection(int *i, int *j, int direction) {
+	switch (direction) {
+		case NORTH:
+			(*j)--;
+			break;
+		case EAST:
+			(*i)++;
+			break;
+		case SOUTH:
+			(*j)++;
+			break;
+		case WEST:
+		default:
+			(*i)--;
+			break;
+	}
+}
+
+// Retorna l'altitud de la casella en una direcció de l'actual o INF si hi ha error
+double checkAltitudeInDirection(double ** travelAltitude, int i, int j, int direction, int n) {
+	advanceInDirection(&i, &j, direction);
+
+	if (i >= n || j >= n || i < 0 || j < 0) {
+		return INFINITY;
+	}
+	return travelAltitude[i][j];
+}
+
+// Recorre recursivament la matriu buscant la mínima altitud i retornant el total recorregut
+// Podeu assumir que les dades sempre donaran un camí decreixent en altitud de 0, 0  a n-1, n-1
+double travelThroughAltitude(double ** travelAltitude, int i, int j, int n) {
+	if (i == n - 1 && j == n - 1) {
+		return travelAltitude[i][j];
+	}
+
+	int newI = i, newJ = j, min = NORTH;
+	double minAlt = 0;
+
+	for (int k = 0; k < DIRECTIONS; k++) {
+		double alt = checkAltitudeInDirection(travelAltitude, i, j, k, n);
+
+		if (alt < minAlt) {
+			minAlt = alt;
+			min = k;
+		}
+	}
+
+	advanceInDirection(&newI, &newJ, min);
+
+	return travelAltitude[i][j] + travelThroughAltitude(travelAltitude, i, j, n);
+}
+
+// Retorna una estimació del temps de viatge des de BCN segons l'altitud
+double getTimeFromBcn(Destination dest) {
+	double time = getDistanceFromBcn(dest) / TIME_FACTOR;
+
+	time += travelThroughAltitude(dest.travelAltitude, 0, 0, dest.n);
+
+	return time;
+}
+
+// Recorre recursivament la matriu buscant la mínima altitud i mapejant el recorregut
+// Podeu assumir que les dades sempre donaran un camí decreixent en altitud de 0, 0  a n-1, n-1
+void mapAltitude(double ** travelAltitude, char ** map, int i, int j, int n) {
+	map[i + 1][j + 1] = ' ';
+
+	if (i == n - 1 && j == n - 1) {
+		return;
+	}
+
+	int newI = i, newJ = j, min = NORTH;
+	double minAlt = 0;
+
+	for (int k = 0; k < DIRECTIONS; k++) {
+		double alt = checkAltitudeInDirection(travelAltitude, i, j, k, n);
+
+		if (alt < minAlt) {
+			minAlt = alt;
+			min = k;
+		}
+	}
+
+	advanceInDirection(&newI, &newJ, min);
+
+	mapAltitude(travelAltitude, map, i, j, n);
+}
+
+
+// Retorna un mapeig del recorregut segons l'altitud mínima, amb un marc
+char ** mapAltitudeTravel(Destination dest) {
+	int i, j;
+	char ** map = (char **)malloc(sizeof(char *) * (dest.n + 2));
+
+	for (i = 0; i < dest.n + 2; i++) {
+		map[i] = (char *) malloc(sizeof(char) * (dest.n + 2));
+
+		for (j = 0; j < dest.n + 2; j++) {
+			map[i][j] = '#';
+		}
+	}
+
+	mapAltitude(dest.travelAltitude, map, 0, 0, dest.n);
+
+	return map;
+}

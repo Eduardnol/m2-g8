@@ -30,4 +30,7 @@ typedef struct {
 double getDistanceFromBcn(Destination dest);
 double getDistanceBetween(Destination this, Destination that);
 double getAverageHotelPrice(Destination dest);
+double getTimeFromBcn(Destination dest);
+char ** mapAltitudeTravel(Destination dest);
+
 #endif
