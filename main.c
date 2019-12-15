@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "logic/functions/functions.h"
 #include "logic/menu/menu.h"
+#include "logic/functions/functions.h"
 #include "model/list/list.h"
 #include "model/destination/destination.h"
 
@@ -35,6 +35,7 @@ int main() {
 			}
 		} while (!isCorrect(option));
 
+		execute(option, &l);
 	} while (!isExit(option));
 
 	destroy(&l);

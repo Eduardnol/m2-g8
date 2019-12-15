@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "../../model/list/list.h"
 
+void execute(int option, List * l);
 void readWholeFile(FILE * f, List * l);
 
 #endif
