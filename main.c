@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "model/functions/functions.h"
+#include "logic/functions/functions.h"
 #include "model/list/list.h"
 #include "model/destination/destination.h"
 
