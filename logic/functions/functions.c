@@ -16,8 +16,9 @@ void showAllDestinations(List *l) {
 	option -= 1;
 
 	goStart(l, option);
-
+    printf("\nHola)");
 	while (!isEnd(*l, option)) {
+
 		printDestination(readPoi(*l, option), ++i, option);
 		goNext(l, option);
 	}
