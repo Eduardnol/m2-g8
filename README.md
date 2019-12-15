@@ -2,7 +2,7 @@
 
 Projecte per Stries
 
-Jiangnan Chen
-Miquel Sellés
-Àlex Aspa
+Jiangnan Chen, 
+Miquel Sellés, 
+Àlex Aspa, 
 Eduardo Nolla
