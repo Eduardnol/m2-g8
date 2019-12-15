@@ -167,3 +167,62 @@ void freeAll(Destination dest) {
 	free(dest.hotelPrices);
 	free(dest.travelAltitude);
 }
+
+char * readString(FILE * file) {
+	int i = 0;
+	int size = 10;
+	char tmp;
+	char* ret = (char*) malloc(sizeof(char) * size);
+
+
+	fscanf(file, "%c", &tmp);
+	do {
+		i++[ret] = tmp;
+
+		if (i >= size) {
+			size *= 2;
+			resize(&ret, size);
+		}
+		fscanf(file, "%c", &tmp);
+	} while(tmp != '\n');
+
+	resize(&ret, i + 1);
+
+
+	return ret;
+}
+
+Destination readFromFile(FILE * file) {
+	Destination d;
+	int i = 0, j = 0;
+
+	char dummy;
+	fscanf(file, "%c", &dummy);
+
+	d.name = readString(file);
+	d.country = readString(file);
+
+	fscanf(file, "%d", &d.area);
+	d.n = (int) sqrt(d.area);
+
+	d.travelAltitude = (double**) malloc(sizeof(double*) * d.n);
+
+	for (i = 0;  i < d.n ; i++) {
+		d.travelAltitude[i] = (double*) malloc(sizeof(double) * d.n);
+		for (j = 0;  j < d.n ; j++) {
+			fscanf(file, "%lf", &d.travelAltitude[i][j]);
+		}
+	}
+
+	fscanf(file, "%d", &d.nHotels);
+
+	d.hotelPrices = (double*) malloc(sizeof(double) * d.nHotels);
+	for (i = 0;  i < d.nHotels; i++) {
+		fscanf(file, "%lf", &d.hotelPrices[i]);
+	}
+
+	fscanf(file, "%lf", &d.location.lat);
+	fscanf(file, "%lf", &d.location.lon);
+
+	return d;
+}

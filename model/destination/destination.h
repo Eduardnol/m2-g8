@@ -27,6 +27,7 @@ typedef struct {
 	Coordinates location;
 } Destination;
 
+Destination readFromFile(FILE * file);
 double getDistanceFromBcn(Destination dest);
 double getDistanceBetween(Destination this, Destination that);
 double getAverageHotelPrice(Destination dest);
