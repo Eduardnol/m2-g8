@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "logic/functions/functions.h"
+#include "logic/menu/menu.h"
 #include "model/list/list.h"
 #include "model/destination/destination.h"
 
@@ -12,12 +13,29 @@ int main() {
 	FILE* f = fopen(PATH, "r");
 
 	if (f = NULL) {
+		printFileError(PATH);
 		return -1;
 	}
 
 	List l = create();
 
 	readWholeFile(f, &l);
+
+
+	printWelcomeLine();
+
+	do {
+		printMenu();
+
+		do {
+			option = askUserForOption();
+
+			if (!isCorrect(option)) {
+				printOptionError();
+			}
+		} while (!isCorrect(option));
+
+	} while (!isExit(option));
 
 	destroy(&l);
 
