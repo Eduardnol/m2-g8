@@ -107,12 +107,40 @@ void removePoi(List * l, int mode) {
 	}
 }
 
+void goStart(List * l, int mode) {
+	l -> poi[mode] = l -> first -> next[mode];
+}
+
+void goEnd(List * l, int mode) {
+	l -> poi[mode] = l -> last -> prev[mode];
+}
+
 void goNext(List * l, int mode) {
 	l -> poi[mode] = l -> poi[mode] -> next[mode];
 }
 
+void goNextTimes(List * l, int mode, int times) {
+	int i;
+	for (i = 1; i < times; i++) {
+		if (isEnd(*l, mode)) {
+			break;
+		}
+		goNext(l, mode);
+	}
+}
+
 void goPrev(List * l, int mode) {
 	l -> poi[mode] = l -> poi[mode] -> prev[mode];
+}
+
+void goPrevTimes(List * l, int mode, int times) {
+	int i;
+	for (i = 1; i < times; i++) {
+		if (isStart(*l, mode)) {
+			break;
+		}
+		goPrev(l, mode);
+	}
 }
 
 int isEnd(List l, int mode) {
